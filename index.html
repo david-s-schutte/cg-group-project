@@ -4,18 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="css/index.css">
     <script src="js/three.js"></script>
     <script src ="js/OrbitControls.js"></script>
-    <title>Introduction to Computer Graphics 2021 Group 20</title>
+    <title>HOME</title>
 </head>
 <body>
-    <div class = "content">
-        <img src="images/index/HOME.svg"></img>
-        <script src = "js/index/setup.js"></script>
-        <script src = "js/index/build.js"></script>
-        <script src = "js/index/animate.js"></script>
-        <script src = "js/index/run.js"></script>
+
+    <script>
+        function myFunction() {
+          document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
+        }
+    </script>
+
+    <div>
+        <div class = "centerLogo">
+            <img src="images/index/HOME.svg"></img>
+        </div>
+    
+        <div class ="centerButtons">
+            <button class="button1"  onClick="location.href='godmode.html'">God Mode</button>
+        </div>
+    
+        <div class = "centerButtons">
+            <button class="button2" onClick="location.href='explorermode.html'">Explorer Mode</button>
+        </div>
+
+        <div class = "centerButtons">
+            <button class="creditsbutton" onClick="location.href='credits.html'">Credits</button>
+        </div>
     </div>
+    
+    
+    
 </body>
 </html>
