@@ -283,3 +283,24 @@ function animate_pluto() {
     pluto.position.z = (d*39.48)*Math.cos(alpha/247.9);
     requestAnimationFrame(animate_pluto);
 }
+
+
+/*
+Current GUI Code:
+It doesn't work at the moment because time is a constant
+*/
+var testSpeed = 0;
+
+function buildGui() {
+    gui = new dat.GUI();
+    var params={
+        time: speed,    
+        test: testSpeed
+    }
+        gui.add(params, 'speed', 0, 0.01).onChange(function(val){
+            speed = val;
+        });
+        gui.add(params, 'test', 0, 100).onChange(function(val){
+            testSpeed = val;
+        });
+    } 

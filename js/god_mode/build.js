@@ -2,7 +2,7 @@
 
 //Create a cube using variable w, h, d
 function createCube(w, h, d, color) {
-    var material = new THREE.MeshBasicMaterial();
+    var material = new THREE.MeshPhongMaterial();
     material.color = new THREE.Color(color);
     //material.wireframe = true;
     var geometry_cube = new THREE.BoxGeometry(w, h, d);
@@ -12,9 +12,9 @@ function createCube(w, h, d, color) {
 
 //Create a sphere using variable radius, vertical lines, horizontal lines
 function createSphere(radius, hlines, vlines, color) {
-    var material = new THREE.MeshBasicMaterial();
+    var material = new THREE.MeshPhongMaterial();
     material.color = new THREE.Color(color);
-    material.wireframe = true;
+    material.wireframe = false;
     var geometry_sphere = new THREE.SphereGeometry(radius, hlines, vlines);
     var sphere = new THREE.Mesh(geometry_sphere, material);
     return sphere;
@@ -112,6 +112,13 @@ function createsaturnring(){
     }
 }
 
+//Add a point light to the scene where the sun is, Currently the sun is not illuminated by this light
+function createPointLight() {
+    const light = new THREE.PointLight(new THREE.Color(1, 1, 1), 1, 0, 2);
+    light.position.set(0, 1, 0);
+    scene.add(light);
+}
+
 function addShapes() {
     scene.add(pluto);
     scene.add(triton);
@@ -141,5 +148,4 @@ function addShapes() {
     scene.add(venus);
     scene.add(mercury);
     scene.add(sun)
-
 }

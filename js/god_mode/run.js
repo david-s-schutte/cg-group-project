@@ -35,4 +35,8 @@ animate_triton();
 animate_pluto();
 renderScene();
 
+createPointLight();
+setLight();
+//buildGui();
+
 window.addEventListener('resize', resizeScene);
