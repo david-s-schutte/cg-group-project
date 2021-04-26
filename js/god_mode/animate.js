@@ -28,7 +28,6 @@ function animate_sphere() {
 */
 
 
-
 const speed = 0.005;
 
 
@@ -285,10 +284,84 @@ function animate_pluto() {
     requestAnimationFrame(animate_pluto);
 }
 
+// //reposition camera
+// var raycaster = new THREE.Raycaster();
+// var selected = false;
+// function onDocumentMouseDown(event) {
+//     var mouse = new THREE.Vector2;
+
+//     mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2-1;
+//     mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2+1;
+
+//     Raycaster.setFromCamera(mouse, camera);
+
+//     var intersects = raycaster.intersectObjects(scene.children, false);
+
+//     if (intersects.length > 0) {
+//         //model is selected
+//         if (intersects[0].object) {
+//             var pos = intersects[0].point;
+//             //camera.position.set(pos);
+//             controls.target.set(pos);
+//             controls.update();
+//         }
+//     }
+// }
+
+var raycaster = new THREE.Raycaster();
+
+//Define a selected object
+var selected = false;
+var selectedobj;
+
+//add event listener
+function onDocumentMouseDown(event) {
+    var mouse = new THREE.Vector2;
+    
+    mouse.x = (event.clientX / renderer.domElement.clientWidth)*2-1;
+    mouse.y = -(event.clientY / renderer.domElement.clientHeight)*2+1;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    var intersects = raycaster.intersectObjects(scene.children, false);
+
+    if (intersects.length > 0) {
+        //model is selected
+        if (!selected) {
+            var pos = intersects[0].object.position;
+
+            camera.position.set(pos.x+150, pos.y+10, pos.z);
+            controls.target.set(pos.x, pos.y, pos.z);
+            controls.update();
+            selected = true;
+            selectedobj = intersects[0].object;
+            followPlanet();
+        }
+    }
+}
+
+function onDocumentKeyDown(event) {
+    var keyCode = event.which;
+    if (keyCode == 32) {
+        controls.reset();
+        selected = false;
+    }
+}
+
+
+function followPlanet() {
+    if (selected) {
+        var pos = selectedobj.position;
+        camera.position.set(pos.x+150, pos.y+10, pos.z);
+        controls.update();
+
+        requestAnimationFrame(followPlanet);
+    }
+} 
 
 /*
 Current GUI Code:
-It doesn't work at the moment because time is a constant
+It doesn't work at the moment
 */
 var testSpeed = 0;
 
@@ -304,4 +377,4 @@ function buildGui() {
         gui.add(params, 'test', 0, 100).onChange(function(val){
             testSpeed = val;
         });
-    } 
+    }
