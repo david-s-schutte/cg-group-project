@@ -21,7 +21,7 @@ function setScene() {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     document.body.appendChild(renderer.domElement);
-    controls = new THREE.OrbitControls(camera,renderer.domElement);
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
 }
 
 //Resize the scene and update the camera aspect to the screen ration
