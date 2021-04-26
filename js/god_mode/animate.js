@@ -41,7 +41,8 @@ var dalpha = Math.PI/1000;
 
 
 function renderScene(){
-    renderer.render(scene,camera);
+    renderer.render(scene, camera);
+    controls.update();
     requestAnimationFrame(renderScene);
 }
 

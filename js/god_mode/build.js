@@ -1,5 +1,9 @@
 /* global THREE, scene, renderer, camera */
 
+var ambientlight;
+var cameralight;
+var sunlight;
+
 //Create a cube using variable w, h, d
 function createCube(w, h, d, color) {
     var material = new THREE.MeshPhongMaterial();
@@ -122,11 +126,14 @@ function createsaturnring(){
     }
 }
 
-//Add a point light to the scene where the sun is, Currently the sun is not illuminated by this light
-function createPointLight() {
-    const light = new THREE.PointLight(new THREE.Color(1, 1, 1), 1, 0, 2);
-    light.position.set(0, 1, 0);
-    scene.add(light);
+function createLight() {
+    sunlight = new THREE.PointLight(new THREE.Color(1, 1, 1), 1, 0, 2);
+    sunlight.position.set(0, 1, 0);
+    scene.add(sunlight);
+    cameralight = new THREE.PointLight((1, 1, 1), 0.5);
+    camera.add(cameralight);
+    ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.5);
+    scene.add(ambientlight);
 }
 
 function addShapes() {

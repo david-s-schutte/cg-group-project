@@ -6,8 +6,6 @@ var scene;
 var camera;
 var renderer;
 var controls;
-var ambientlight;
-var cameralight;
 
 //Setup the 3 main components: scene, camera, renderer
 function setScene() {
@@ -31,14 +29,5 @@ var resizeScene = function() {
     renderer.setSize(width, height);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-
     renderer.render(scene, camera);
 };
-
-//Create a light for the camera and an ambient light
-function setLight() {
-    cameralight = new THREE.PointLight((1, 1, 1), 0.5);
-    camera.add(cameralight);
-    ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.5);
-    scene.add(ambientlight);
-}

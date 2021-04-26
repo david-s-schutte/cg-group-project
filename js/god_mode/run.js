@@ -2,6 +2,7 @@ setScene();
 addShapes();
 createAsteroids();
 createsaturnring();
+renderScene();
 
 //animate_cube();
 //animate_sphere();
@@ -35,8 +36,7 @@ animate_triton();
 animate_pluto();
 renderScene();
 
-createPointLight();
-setLight();
+createLight();
 //buildGui();
 
 window.addEventListener('resize', resizeScene);
