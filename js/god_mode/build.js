@@ -1,5 +1,6 @@
 /* global THREE, scene, renderer, camera */
 
+// Light Variables
 var ambientlight;
 var cameralight;
 var sunlight;
@@ -126,6 +127,7 @@ function createsaturnring(){
     }
 }
 
+// Create sunlight within the sun (does not illuminate sun), create camera light and ambient light
 function createLight() {
     sunlight = new THREE.PointLight(new THREE.Color(1, 1, 1), 1, 0, 2);
     sunlight.position.set(0, 1, 0);
