@@ -284,30 +284,7 @@ function animate_pluto() {
     requestAnimationFrame(animate_pluto);
 }
 
-// //reposition camera
-// var raycaster = new THREE.Raycaster();
-// var selected = false;
-// function onDocumentMouseDown(event) {
-//     var mouse = new THREE.Vector2;
-
-//     mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2-1;
-//     mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2+1;
-
-//     Raycaster.setFromCamera(mouse, camera);
-
-//     var intersects = raycaster.intersectObjects(scene.children, false);
-
-//     if (intersects.length > 0) {
-//         //model is selected
-//         if (intersects[0].object) {
-//             var pos = intersects[0].point;
-//             //camera.position.set(pos);
-//             controls.target.set(pos);
-//             controls.update();
-//         }
-//     }
-// }
-
+//reposition camera
 var raycaster = new THREE.Raycaster();
 
 //Define a selected object
@@ -326,7 +303,7 @@ function onDocumentMouseDown(event) {
     var intersects = raycaster.intersectObjects(scene.children, false);
 
     if (intersects.length > 0) {
-        //model is selected
+        //object is selected
         if (!selected) {
             var pos = intersects[0].object.position;
 
@@ -335,6 +312,7 @@ function onDocumentMouseDown(event) {
             controls.update();
             selected = true;
             selectedobj = intersects[0].object;
+            window.open("https://en.wikipedia.org/wiki/Earth");
             followPlanet();
         }
     }
@@ -348,13 +326,12 @@ function onDocumentKeyDown(event) {
     }
 }
 
-
 function followPlanet() {
     if (selected) {
         var pos = selectedobj.position;
         camera.position.set(pos.x+150, pos.y+10, pos.z);
+        controls.target.set(pos.x, pos.y, pos.z);
         controls.update();
-
         requestAnimationFrame(followPlanet);
     }
 } 
