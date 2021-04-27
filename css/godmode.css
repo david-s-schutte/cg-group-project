@@ -46,6 +46,12 @@ a{
     padding: 0;
 }
 
+.header{
+    color: white;
+    text-align: center;
+    font-size: 20px;
+}
+
 li{
     display: inline;
     float: left;

@@ -73,8 +73,6 @@ function animate_venus(){
 }
 
 function animate_earth(){
-    
-
     earth.rotation.y += speed;
     earth.position.y = 1;
     earth.position.x = -d*Math.cos(alpha);
@@ -94,7 +92,7 @@ function animate_moon(){
 function animate_mars() {
     
 
-    mars.rotation.y += 1.03;
+    mars.rotation.y += speed*1.03;
     mars.position.y = 1;
     mars.position.x = (-d*1.524)*Math.cos(alpha/1.9);
     mars.position.z= (d*1.524)*Math.sin(alpha/1.9);
@@ -111,8 +109,6 @@ function animate_phobos(){
 }
 
 function animate_deimos(){
-    
-
     deimos.position.y = mars.position.y;
     deimos.position.x = mars.position.x+5*Math.sin(alpha*3.68);
     deimos.position.z = mars.position.z-5*Math.cos(alpha*3.68);
@@ -122,8 +118,6 @@ function animate_deimos(){
 
 
 function animate_jupiter(){
-    
-
     jupiter.rotation.y += speed*0.41;
     jupiter.position.y = 1;
     jupiter.position.x = (d*5.203)*Math.sin(alpha/11.862);
@@ -132,7 +126,6 @@ function animate_jupiter(){
 }
 
 function animate_io(){
-
     io.position.y = jupiter.position.y;
     io.position.x = jupiter.position.x+30*Math.sin(alpha*9.4);
     io.position.z = jupiter.position.z-30*Math.cos(alpha*9.4);
@@ -291,6 +284,7 @@ var raycaster = new THREE.Raycaster();
 //Define a selected object
 var selected = false;
 var selectedobj;
+var selectedobjname;
 
 //add event listener
 function onDocumentMouseDown(event) {
@@ -305,37 +299,53 @@ function onDocumentMouseDown(event) {
 
     if (intersects.length > 0) {
         //object is selected
-        if ((intersects[0].object.name === "planet") && (!selected)) {
-            var pos = intersects[0].object.position;
-
-            camera.position.set(pos.x+150, pos.y+10, pos.z);
-            controls.target.set(pos.x, pos.y, pos.z);
-            controls.update();
+        if ((intersects[0].object.name.includes("planet")) && (!selected)) {
             selected = true;
             selectedobj = intersects[0].object;
+            selectedobjname = selectedobj.name;
             //window.open("https://en.wikipedia.org/wiki/Earth");
             followPlanet();
         }
     }
 }
 
-function onDocumentKeyDown(event) {
-    var keyCode = event.which;
-    if (keyCode == 32) {
-        controls.reset();
-        selected = false;
-    }
-}
-
 function followPlanet() {
     if (selected) {
+        dist = calculateCameraDistance(selectedobjname);
         var pos = selectedobj.position;
-        camera.position.set(pos.x+150, pos.y+10, pos.z);
+        camera.position.set(pos.x+dist, pos.y+(dist/10), pos.z);
         controls.target.set(pos.x, pos.y, pos.z);
         controls.update();
         requestAnimationFrame(followPlanet);
     }
 } 
+
+function calculateCameraDistance(selectedobjname) {
+    var name = selectedobjname.replace(' planet', '');
+    var dist;
+    switch(name) {
+        case "Sun": return dist = 150; break;
+        case "Mercury": return dist = 10; break;
+        case "Venus": return dist = 20; break;
+        case "Moon": return dist = 5; break;
+        case "Earth": return dist = 20; break;
+        case "Mars": return dist = 15; break;
+        case "Jupiter": return dist = 150; break;
+        case "Saturn": return dist = 150; break;
+        case "Uranus": return dist = 70; break;
+        case "Neptune": return dist = 70; break;
+        case "Pluto": return dist = 4; break;
+    }
+}
+
+function onDocumentKeyDown(event) {
+    var keyCode = event.which;
+    if (keyCode == 27) {
+        controls.reset();
+        selected = false;
+        selectedobjname = "";
+    }
+}
 
 /*
 Current GUI Code:
