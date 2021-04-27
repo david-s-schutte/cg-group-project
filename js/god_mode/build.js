@@ -161,6 +161,7 @@ function createsaturnring(){
 }
 
 // Create sunlight within the sun (does not illuminate sun), create camera light and ambient light
+const group = new THREE.Group();
 function createLight() {
     sunlight = new THREE.PointLight(new THREE.Color(1, 1, 1), 1, 0, 2);
     sunlight.position.set(0, 1, 0);
@@ -171,6 +172,45 @@ function createLight() {
     
     ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.5);
     scene.add(ambientlight);
+
+    //add a series of spotlights directed at the sun
+    var ypos = 40;
+    var displace = 50;
+    //top
+    addSpotlight(sun, 0, ypos+20, 0);
+    //upper
+    addSpotlight(sun, displace, ypos, 0);
+    addSpotlight(sun, -displace, ypos, 0);
+    addSpotlight(sun, 0, ypos, displace);
+    addSpotlight(sun, 0, ypos, -displace);
+    //middle
+    addSpotlight(sun, displace, 0, displace);
+    addSpotlight(sun, -displace, 0, displace);
+    addSpotlight(sun, displace, 0, displace);
+    addSpotlight(sun, displace, 0, -displace);
+    //lower
+    addSpotlight(sun, displace, -ypos, 0);
+    addSpotlight(sun, -displace, -ypos, 0);
+    addSpotlight(sun, 0, -ypos, displace);
+    addSpotlight(sun, 0, -ypos, -displace);
+    //bottom
+    addSpotlight(sun, 0, -ypos-20, 0);
+}
+
+function addSpotlight(object, xpos, ypos, zpos) {
+    var spotlight = new THREE.SpotLight(new THREE.Color(1,1,1), 0.6);
+    spotlight.position.x = xpos;
+    spotlight.position.y = ypos;
+    spotlight.position.z = zpos;
+    spotlight.angle = Math.PI/3;
+    spotlight.penumbra = 0.3;
+    spotlight.castShadow = false;
+    spotlight.target = object;
+    spotlight.distance = 100;
+    group.add(spotlight);
+    //helpers used to show the wireframe of the spotlight's light cone:
+    //var helper = new THREE.SpotLightHelper(spotlight);
+    //group.add(helper);
 }
 
 function addShapes() {
@@ -203,4 +243,5 @@ function addShapes() {
     scene.add(mercury);
     scene.add(sun)
     scene.add(skybox);
+    scene.add(group);
 }
