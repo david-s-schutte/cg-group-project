@@ -39,6 +39,18 @@ function createSphere(radius, hlines, vlines, color) {
 function createTexturedSphere(radius, hlines, vlines, textureName) {
     var material = new THREE.MeshLambertMaterial();
     var texture = new THREE.TextureLoader().load(textureName);
+    //material.side = THREE.DoubleSide;
+    material.map = texture;
+    var geometry_sphere = new THREE.SphereGeometry(radius, hlines, vlines);
+    var sphere = new THREE.Mesh(geometry_sphere, material);
+    sphere.name = "planet";
+    return sphere;
+}
+
+function createSkyBox(radius, hlines, vlines, textureName) {
+    var material = new THREE.MeshLambertMaterial();
+    var texture = new THREE.TextureLoader().load(textureName);
+    material.side = THREE.DoubleSide;
     material.map = texture;
     var geometry_sphere = new THREE.SphereGeometry(radius, hlines, vlines);
     var sphere = new THREE.Mesh(geometry_sphere, material);
@@ -82,6 +94,8 @@ var venus = createTexturedSphere(2.5,44,44,'images/textures/venustexture.jpg');
 var mercury = createTexturedSphere(1,32,32,'images/textures/mercurytexture.jpg');
 
 var sun = createTexturedSphere(30,55,55,'images/textures/suntexture.jpg');
+
+var skybox = createSkyBox(100000, 55, 55, 'images/textures/milkywaytexture.jpeg');
 
 //asteroids
 var n = 300;
@@ -188,4 +202,5 @@ function addShapes() {
     scene.add(venus);
     scene.add(mercury);
     scene.add(sun)
+    scene.add(skybox);
 }

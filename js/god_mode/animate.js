@@ -304,7 +304,7 @@ function onDocumentMouseDown(event) {
 
     if (intersects.length > 0) {
         //object is selected
-        if (!selected) {
+        if ((intersects[0].object.name === "planet") && (!selected)) {
             var pos = intersects[0].object.position;
 
             camera.position.set(pos.x+150, pos.y+10, pos.z);
@@ -312,7 +312,7 @@ function onDocumentMouseDown(event) {
             controls.update();
             selected = true;
             selectedobj = intersects[0].object;
-            window.open("https://en.wikipedia.org/wiki/Earth");
+            //window.open("https://en.wikipedia.org/wiki/Earth");
             followPlanet();
         }
     }
