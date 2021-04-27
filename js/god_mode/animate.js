@@ -55,7 +55,7 @@ function animate_sun(){
 function animate_mercury(){
     alpha += dalpha;
 
-    mercury.rotation += speed/58.6;
+    mercury.rotation.y += speed/58.6;
     mercury.position.y = 1;
     mercury.position.x = (-d*0.38)*Math.cos(alpha/0.24);
     mercury.position.z = (d*0.38)*Math.sin(alpha/0.24);
@@ -94,7 +94,7 @@ function animate_moon(){
 function animate_mars() {
     
 
-    mars.rotation += 1.03;
+    mars.rotation.y += 1.03;
     mars.position.y = 1;
     mars.position.x = (-d*1.524)*Math.cos(alpha/1.9);
     mars.position.z= (d*1.524)*Math.sin(alpha/1.9);
@@ -124,7 +124,7 @@ function animate_deimos(){
 function animate_jupiter(){
     
 
-    jupiter.rotation += speed*0.41;
+    jupiter.rotation.y += speed*0.41;
     jupiter.position.y = 1;
     jupiter.position.x = (d*5.203)*Math.sin(alpha/11.862);
     jupiter.position.z = (d*5.203)*Math.cos(alpha/11.862);
@@ -181,7 +181,7 @@ function animate_Asteroids() {
 }
 
 function animate_saturn() {
-    saturn.rotation += speed*0.425;
+    saturn.rotation.y += speed*0.425;
     saturn.position.y = 1;
     saturn.position.x = (d*9.5)*Math.sin(alpha/29.456);
     saturn.position.z = (d*9.5)*Math.cos(alpha/26.456);
@@ -190,6 +190,7 @@ function animate_saturn() {
 
 function animate_saturnring() {
     rings.rotation.z = 0.47;
+    rings.rotation.y += speed*0.425;
     rings.position.y = saturn.position.y;
     rings.position.x = saturn.position.x;
     rings.position.z = saturn.position.z;
@@ -226,7 +227,7 @@ function animate_dione() {
 }
 
 function animate_uranus() {
-    uranus.rotation -= speed*0.718;
+    uranus.rotation.y -= speed*0.718;
     uranus.position.y = 1;
     uranus.position.x = (d*19.2)*Math.sin(alpha/83.7);
     uranus.position.z = (d*19.2)*Math.cos(alpha/83.7);
@@ -262,7 +263,7 @@ function animate_ariel() {
 }
 
 function animate_neptune() {
-    neptune.rotation += speed*0.673;
+    neptune.rotation.y += speed*0.673;
     neptune.position.y = 1;
     neptune.position.x = (d*30.05)*Math.sin(alpha/163.7);
     neptune.position.z = (d*30.05)*Math.cos(alpha/163.7);
@@ -277,7 +278,7 @@ function animate_triton() {
 }
 
 function animate_pluto() {
-    pluto.rotation += speed*0.673;
+    pluto.rotation.y += speed*0.673;
     pluto.position.y = 1;
     pluto.position.x = (d*39.48)*Math.sin(alpha/247.9);
     pluto.position.z = (d*39.48)*Math.cos(alpha/247.9);
