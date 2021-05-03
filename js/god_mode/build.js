@@ -4,6 +4,7 @@
 var ambientlight;
 var cameralight;
 var sunlight;
+var line
 
 //Create a cube using variable w, h, d
 function createCube(w, h, d, color) {
@@ -56,6 +57,48 @@ function createSkyBox(radius, hlines, vlines, textureName) {
     var sphere = new THREE.Mesh(geometry_sphere, material);
     return sphere;
 }
+
+function createOrbitLines(){
+    var material = new THREE.LineBasicMaterial({
+        color:0xffffff,
+        linewidth: 10
+    });
+    var geo = new THREE.Geometry()
+    geo.vertices.push(0,0,0);
+    geo.vertices.push(50,50,50);
+
+
+
+
+    line = new THREE.Line( geo, material );
+    
+
+}
+
+// function createOrbitLines(){
+//     const material = new THREE.LineBasicMaterial({
+//         color:0xffffff,
+//         linewidth: 10
+//     });
+//     const points = [];
+//     for(let i = 0; i <= 3600; i++){
+//         points.push( new THREE.Vector3(i*Math.sin(360), -i*Math.cos(360),0));
+//         // console.log(i*Math.cos(360))
+//         // console.log(i*Math.sin(360))
+//     }
+//     const geometry = new THREE.BufferGeometry().setFromPoints( points );
+//     line = new THREE.Line( geometry, material );
+    
+
+// }
+
+
+
+// earth.rotation.y += speed;
+// earth.position.y = 1;
+// earth.position.x = -d*Math.cos(alpha);
+// earth.position.z = d*Math.sin(alpha);
+// requestAnimationFrame(animate_earth);
 
 //var cube = createCube(2, 2, 2, 0, 1, 0);
 //var sphere = createSphere(1, 20, 20, 1, 0, 1);
@@ -243,5 +286,6 @@ function addShapes() {
     scene.add(mercury);
     scene.add(sun)
     scene.add(skybox);
+    scene.add(line);
     scene.add(group);
 }
