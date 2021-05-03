@@ -32,6 +32,8 @@ function createSphere(radius, hlines, vlines, color) {
     material.wireframe = false;
     var geometry_sphere = new THREE.SphereGeometry(radius, hlines, vlines);
     var sphere = new THREE.Mesh(geometry_sphere, material);
+    sphere.recieveShadow = true;
+    sphere.castShadow = true;
     return sphere;
 }
 
@@ -44,6 +46,8 @@ function createTexturedSphere(radius, hlines, vlines, planetName, textureName) {
     var geometry_sphere = new THREE.SphereGeometry(radius, hlines, vlines);
     var sphere = new THREE.Mesh(geometry_sphere, material);
     sphere.name = planetName;
+    sphere.castShadow = true;
+    sphere.recieveShadow = true;
     return sphere;
 }
 
@@ -109,8 +113,7 @@ var rings = new THREE.Group();
 
 function createAsteroids(){
     
-    for(let i=0; i < n; i++)
-    {
+    for(let i=0; i < n; i++) {
         var rot2 = new THREE.Matrix4();
         var sca = new THREE.Matrix4();
         var rot = new THREE.Matrix4();
@@ -133,10 +136,9 @@ function createAsteroids(){
     }
 }
 
-function createsaturnring(){
+function createsaturnring() {
     
-    for(let b=0; b < r; b++)
-    {
+    for(let b=0; b < r; b++) {
         var rot2 = new THREE.Matrix4();
         var sca = new THREE.Matrix4();
         var rot = new THREE.Matrix4();
@@ -165,12 +167,13 @@ const group = new THREE.Group();
 function createLight() {
     sunlight = new THREE.PointLight(new THREE.Color(1, 1, 1), 1, 0, 2);
     sunlight.position.set(0, 1, 0);
+    sunlight.castShadow = true;
     scene.add(sunlight);
 
     cameralight = new THREE.PointLight((1, 1, 1), 0.5);
     camera.add(cameralight);
     
-    ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.5);
+    ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.1);
     scene.add(ambientlight);
 
     //add a series of spotlights directed at the sun
@@ -186,7 +189,7 @@ function createLight() {
     //middle
     addSpotlight(sun, displace, 0, displace);
     addSpotlight(sun, -displace, 0, displace);
-    addSpotlight(sun, displace, 0, displace);
+    addSpotlight(sun, -displace, 0, -displace);
     addSpotlight(sun, displace, 0, -displace);
     //lower
     addSpotlight(sun, displace, -ypos, 0);
@@ -198,7 +201,7 @@ function createLight() {
 }
 
 function addSpotlight(object, xpos, ypos, zpos) {
-    var spotlight = new THREE.SpotLight(new THREE.Color(1,1,1), 0.6);
+    var spotlight = new THREE.SpotLight(new THREE.Color(1,1,1), 0.8);
     spotlight.position.x = xpos;
     spotlight.position.y = ypos;
     spotlight.position.z = zpos;
@@ -241,7 +244,7 @@ function addShapes() {
     scene.add(moon);
     scene.add(venus);
     scene.add(mercury);
-    scene.add(sun)
+    scene.add(sun);
     scene.add(skybox);
     scene.add(group);
 }

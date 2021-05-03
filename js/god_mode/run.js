@@ -37,7 +37,7 @@ animate_pluto();
 renderScene();
 
 createLight();
-//buildGui();
+buildGui();
 
 // Recenter camera
 document.addEventListener('mousedown', onDocumentMouseDown, false);

@@ -45,7 +45,6 @@ function renderScene(){
     requestAnimationFrame(renderScene);
 }
 
-
 function animate_sun(){
     sun.rotation.y += speed/2;
     sun.position.y = 1;
@@ -63,8 +62,6 @@ function animate_mercury(){
 }
 
 function animate_venus(){
-    
-
     venus.rotation += speed/243;
     venus.position.y = 1;
     venus.position.x = (-d*0.72)*Math.cos(alpha/0.616);
@@ -81,8 +78,7 @@ function animate_earth(){
 }
 
 function animate_moon(){
-    
-
+    moon.rotation.y += speed;
     moon.position.y = earth.position.y;
     moon.position.x = earth.position.x+5*Math.sin(alpha*20);
     moon.position.z = earth.position.z-5*Math.cos(alpha*20);
@@ -90,8 +86,6 @@ function animate_moon(){
 }
 
 function animate_mars() {
-    
-
     mars.rotation.y += speed*1.03;
     mars.position.y = 1;
     mars.position.x = (-d*1.524)*Math.cos(alpha/1.9);
@@ -100,8 +94,6 @@ function animate_mars() {
 }
 
 function animate_phobos(){
-    
-
     phobos.position.y = mars.position.y;
     phobos.position.x = mars.position.x+3*Math.sin(alpha*43.2);
     phobos.position.z = mars.position.z-3*Math.cos(alpha*43.2);
@@ -114,8 +106,6 @@ function animate_deimos(){
     deimos.position.z = mars.position.z-5*Math.cos(alpha*3.68);
     requestAnimationFrame(animate_deimos);
 }
-
-
 
 function animate_jupiter(){
     jupiter.rotation.y += speed*0.41;
@@ -133,7 +123,6 @@ function animate_io(){
 }
 
 function animate_europa() {
-    
     europa.position.y = jupiter.position.y;
     europa.position.x = jupiter.position.x+40*Math.sin(alpha*4);
     europa.position.z = jupiter.position.z-40*Math.cos(alpha*4);
@@ -141,7 +130,6 @@ function animate_europa() {
 }
 
 function animate_ganymede() {
-    
     ganymede.position.y = jupiter.position.y;
     ganymede.position.x = jupiter.position.x+50*Math.sin(alpha*2);
     ganymede.position.z = jupiter.position.z-50*Math.cos(alpha*2);
@@ -149,15 +137,11 @@ function animate_ganymede() {
 }
 
 function animate_callisto() {
-
     callisto.position.y = jupiter.position.y;
     callisto.position.x = jupiter.position.x+70*Math.sin(alpha);
     callisto.position.z = jupiter.position.z-70*Math.cos(alpha);
     requestAnimationFrame(animate_callisto);
 }
-
-
-
 
 function rotate(object) {
     object.rotation.x += Math.random()/50;
@@ -302,18 +286,24 @@ function onDocumentMouseDown(event) {
         if ((intersects[0].object.name.includes("planet")) && (!selected)) {
             selected = true;
             selectedobj = intersects[0].object;
-            selectedobjname = selectedobj.name;
+            selectedobjname = intersects[0].object.name;
+            var pos = selectedobj.position;
+            dist = calculateCameraDistance(selectedobjname);
+            camera.position.set(pos.x+dist, pos.y+(dist/10), pos.z);
+            controls.update();
             //window.open("https://en.wikipedia.org/wiki/Earth");
             followPlanet();
+        } else {
+            //console.log("No object found");
         }
     }
 }
 
 function followPlanet() {
     if (selected) {
-        dist = calculateCameraDistance(selectedobjname);
+        //dist = calculateCameraDistance(selectedobjname);
         var pos = selectedobj.position;
-        camera.position.set(pos.x+dist, pos.y+(dist/10), pos.z);
+        //camera.position.set(pos.x+dist, pos.y+(dist/10), pos.z);
         controls.target.set(pos.x, pos.y, pos.z);
         controls.update();
         requestAnimationFrame(followPlanet);
@@ -352,17 +342,21 @@ Current GUI Code:
 It doesn't work at the moment
 */
 var testSpeed = 0;
-
 function buildGui() {
     gui = new dat.GUI();
+    //var plan = gui.addFolder('Planets');
     var params={
-        time: speed,    
-        test: testSpeed
+        //time: speed,
+        test: testSpeed,
+        select_planet: function() {/*add in code to select a planet*/},
+        select_planet2: function() {/*add in code to select a planet*/}
     }
-        gui.add(params, 'speed', 0, 0.01).onChange(function(val){
+        /*gui.add(params, 'speed', 0, 0.01).onChange(function(val){
             speed = val;
-        });
+        }); */
         gui.add(params, 'test', 0, 100).onChange(function(val){
             testSpeed = val;
         });
+        gui.add(params, 'select_planet');
+        gui.add(params, 'select_planet2');
     }
