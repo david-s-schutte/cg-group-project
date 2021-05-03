@@ -27,7 +27,6 @@ function animate_sphere() {
 }
 */
 
-
 const speed = 0.005;
 
 
@@ -43,6 +42,7 @@ function renderScene(){
     renderer.render(scene, camera);
     controls.update();
     requestAnimationFrame(renderScene);
+    //renderer.render(sceneHUD, cameraHUD);
 }
 
 

@@ -6,6 +6,8 @@ var scene;
 var camera;
 var renderer;
 var controls;
+var width = window.innerWidth;
+var height = window.innerHeight;
 
 //Setup the 3 main components: scene, camera, renderer
 function setScene() {
