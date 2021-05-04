@@ -2,7 +2,6 @@ setScene();
 addShapes();
 createAsteroids();
 createsaturnring();
-renderScene();
 
 //animate_cube();
 //animate_sphere();
@@ -36,11 +35,11 @@ animate_triton();
 animate_pluto();
 renderScene();
 
-createLight();
-//buildGui();
-
 // Recenter camera
 document.addEventListener('mousedown', onDocumentMouseDown, false);
 document.addEventListener('keydown', onDocumentKeyDown, false);
+
+createLight();
+buildGui();
 
 window.addEventListener('resize', resizeScene);

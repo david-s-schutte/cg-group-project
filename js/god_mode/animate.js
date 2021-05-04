@@ -37,7 +37,6 @@ const d = 100;
 var alpha = 0;
 var dalpha = Math.PI/1000;
 
-
 function renderScene(){
     renderer.render(scene, camera);
     controls.update();
@@ -351,18 +350,16 @@ function onDocumentKeyDown(event) {
 Current GUI Code:
 It doesn't work at the moment
 */
-var testSpeed = 0;
+var testSpeed = 1;
 
 function buildGui() {
     gui = new dat.GUI();
     var params={
-        time: speed,    
-        test: testSpeed
+        test: testSpeed,
+        add: function() {}
     }
-        gui.add(params, 'speed', 0, 0.01).onChange(function(val){
-            speed = val;
-        });
         gui.add(params, 'test', 0, 100).onChange(function(val){
             testSpeed = val;
         });
+        gui.add(params, 'add');
     }
