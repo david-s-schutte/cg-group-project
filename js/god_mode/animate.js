@@ -301,7 +301,11 @@ function onDocumentMouseDown(event) {
         if ((intersects[0].object.name.includes("planet")) && (!selected)) {
             selected = true;
             selectedobj = intersects[0].object;
-            selectedobjname = selectedobj.name;
+            selectedobjname = intersects[0].object.name;
+            var pos = selectedobj.position;
+            dist = calculateCameraDistance(selectedobjname);
+            camera.position.set(pos.x+dist, pos.y+(dist/10), pos.z);
+            controls.update();
             //window.open("https://en.wikipedia.org/wiki/Earth");
             followPlanet();
         }
@@ -310,24 +314,24 @@ function onDocumentMouseDown(event) {
 
 function followPlanet() {
     if (selected) {
-        dist = calculateCameraDistance(selectedobjname);
+        //dist = calculateCameraDistance(selectedobjname);
         var pos = selectedobj.position;
-        camera.position.set(pos.x+dist, pos.y+(dist/10), pos.z);
+        //camera.position.set(pos.x+dist, pos.y+(dist/10), pos.z);
         controls.target.set(pos.x, pos.y, pos.z);
         controls.update();
         requestAnimationFrame(followPlanet);
     }
 } 
 
-function calculateCameraDistance(selectedobjname) {
+function calculateCameraDistance() {
     var name = selectedobjname.replace(' planet', '');
     var dist;
     switch(name) {
         case "Sun": return dist = 150; break;
         case "Mercury": return dist = 10; break;
         case "Venus": return dist = 20; break;
-        case "Moon": return dist = 5; break;
         case "Earth": return dist = 20; break;
+        case "Moon": return dist = 5; break;
         case "Mars": return dist = 15; break;
         case "Jupiter": return dist = 150; break;
         case "Saturn": return dist = 150; break;
@@ -346,20 +350,47 @@ function onDocumentKeyDown(event) {
     }
 }
 
-/*
-Current GUI Code:
-It doesn't work at the moment
-*/
+// Build the GUI
 var testSpeed = 1;
-
 function buildGui() {
     gui = new dat.GUI();
+    var solarsystemfolder = gui.addFolder('Solar System Controls');
+    var planetfolder = gui.addFolder('Planet Selection');
+    var selectedplanetfolder = gui.addFolder('Selected Planet');
     var params={
         test: testSpeed,
-        add: function() {}
+        add: function() {},
+
+        //select planet functions
+        Sun: function() {/*followPlanet("Sun");*/},
+    Mercury: function() {/*followPlanet("Mercury");*/},
+        Venus: function() {},
+        Earth: function() {},
+        Moon: function() {},
+        Mars: function() {},
+        Jupiter: function() {},
+        Saturn: function() {},
+        Uranus: function() {},
+        Neptune: function() {},
+        Pluto: function() {}
     }
         gui.add(params, 'test', 0, 100).onChange(function(val){
             testSpeed = val;
         });
         gui.add(params, 'add');
+
+        // planet selection folder
+        planetfolder.add(params, 'Sun');
+        planetfolder.add(params, 'Mercury');
+        planetfolder.add(params, 'Venus');
+        planetfolder.add(params, 'Earth');
+        planetfolder.add(params, 'Moon');
+        planetfolder.add(params, 'Mars');
+        planetfolder.add(params, 'Jupiter');
+        planetfolder.add(params, 'Saturn');
+        planetfolder.add(params, 'Uranus');
+        planetfolder.add(params, 'Neptune');
+        planetfolder.add(params, 'Pluto');
+
+        planetfolder.open();
     }
