@@ -265,9 +265,9 @@ function animate_pluto() {
 var raycaster = new THREE.Raycaster();
 
 //Define a selected object
-var selected = false;
-var selectedobj;
-var selectedobjname;
+var planetselected = false;
+var selectedplanet;
+var selectedplanetname;
 
 //add event listener
 function onDocumentMouseDown(event) {
@@ -282,12 +282,12 @@ function onDocumentMouseDown(event) {
 
     if (intersects.length > 0) {
         //object is selected
-        if ((intersects[0].object.name.includes("planet")) && (!selected)) {
-            selected = true;
-            selectedobj = intersects[0].object;
-            selectedobjname = intersects[0].object.name;
-            var pos = selectedobj.position;
-            dist = calculateCameraDistance(selectedobjname);
+        if ((intersects[0].object.name.includes("planet")) && (!planetselected)) {
+            planetselected= true;
+            selectedplanet = intersects[0].object;
+            selectedplanetname = intersects[0].object.name;
+            var pos = selectedplanet.position;
+            dist = calculateCameraDistance(selectedplanetname);
             camera.position.set(pos.x+dist, pos.y+(dist/10), pos.z);
             controls.update();
             //window.open("https://en.wikipedia.org/wiki/Earth");
@@ -299,18 +299,30 @@ function onDocumentMouseDown(event) {
 }
 
 function followPlanet() {
-    if (selected) {
-        //dist = calculateCameraDistance(selectedobjname);
-        var pos = selectedobj.position;
+    if (planetselected) {
+        //dist = calculateCameraDistance(selectedplanetname);
+        var pos = selectedplanet.position;
         //camera.position.set(pos.x+dist, pos.y+(dist/10), pos.z);
         controls.target.set(pos.x, pos.y, pos.z);
         controls.update();
         requestAnimationFrame(followPlanet);
     }
-} 
+}
 
-function calculateCameraDistance() {
-    var name = selectedobjname.replace(' planet', '');
+var lockedplanet;
+function lockCameraToPlanet() {
+    if (planetselected) {
+     var lockedplanetdist = calculateCameraDistance(lockedplanet.name);
+     var lockedplanetpos = lockedplanet.position;
+     camera.position.set(lockedplanetpos.x+lockedplanetdist, lockedplanetpos.y+(lockedplanetdist/10), lockedplanetpos.z);
+     controls.target.set(lockedplanetpos.x, lockedplanetpos.y, lockedplanetpos.z);
+     controls.update();
+     requestAnimationFrame(lockCameraToPlanet);
+    }
+}
+
+function calculateCameraDistance(nam) {
+    var name = nam.replace(' planet', '');
     var dist;
     switch(name) {
         case "Sun": return dist = 150; break;
@@ -331,8 +343,8 @@ function onDocumentKeyDown(event) {
     var keyCode = event.which;
     if (keyCode == 27) {
         controls.reset();
-        selected = false;
-        selectedobjname = "";
+        planetselected= false;
+        selectedplanetname = "";
     }
 }
 
@@ -348,17 +360,17 @@ function buildGui() {
         add: function() {},
 
         //select planet functions
-        Sun: function() {/*followPlanet("Sun");*/},
-        Mercury: function() {/*followPlanet("Mercury");*/},
-        Venus: function() {},
-        Earth: function() {},
-        Moon: function() {},
-        Mars: function() {},
-        Jupiter: function() {},
-        Saturn: function() {},
-        Uranus: function() {},
-        Neptune: function() {},
-        Pluto: function() {}
+        Sun: function() {planetselected= false; lockedplanet = sun; planetselected= true; lockCameraToPlanet();},
+        Mercury: function() {planetselected= false; lockedplanet = mercury; planetselected= true; lockCameraToPlanet();},
+        Venus: function() {planetselected= false; lockedplanet = venus; planetselected= true; lockCameraToPlanet();},
+        Earth: function() {planetselected= false; lockedplanet = earth; planetselected= true; lockCameraToPlanet();},
+        Moon: function() {planetselected= false; lockedplanet = moon; planetselected= true; lockCameraToPlanet();},
+        Mars: function() {planetselected= false; lockedplanet = mars; planetselected= true; lockCameraToPlanet();},
+        Jupiter: function() {planetselected= false; lockedplanet = jupiter; planetselected= true; lockCameraToPlanet();},
+        Saturn: function() {planetselected= false; lockedplanet = saturn; planetselected= true; lockCameraToPlanet();},
+        Uranus: function() {planetselected= false; lockedplanet = uranus; planetselected= true; lockCameraToPlanet();},
+        Neptune: function() {planetselected= false; lockedplanet = neptune; planetselected= true; lockCameraToPlanet();},
+        Pluto: function() {planetselected= false; lockedplanet = pluto; planetselected= true; lockCameraToPlanet();}
     }
         gui.add(params, 'test', 0, 100).onChange(function(val){
             testSpeed = val;
