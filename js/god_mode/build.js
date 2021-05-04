@@ -58,39 +58,46 @@ function createSkyBox(radius, hlines, vlines, textureName) {
     return sphere;
 }
 
+// function createOrbitLines(){
+//     var material = new THREE.LineBasicMaterial({
+//         color:0xffffff,
+//         linewidth: 10
+//     });
+//     var geo = new THREE.BufferGeometry();
+//     geo.vertices.push(0,0,0);
+//     geo.vertices.push(50,50,50);
+
+
+
+
+//     line = new THREE.Line( geo, material );
+    
+
+// }
+
 function createOrbitLines(){
     var material = new THREE.LineBasicMaterial({
         color:0xffffff,
         linewidth: 10
     });
-    var geo = new THREE.Geometry()
-    geo.vertices.push(0,0,0);
-    geo.vertices.push(50,50,50);
+    var alpha = 0;
+    var dalpha =2 * Math.PI / 200;
+    var x;
+    var z;
 
-
-
-
-    line = new THREE.Line( geo, material );
-    
+    var points = [];
+    for(let i = 0; i <= 360; i++){
+        alpha += dalpha;
+        x = -100*Math.cos(alpha);
+        z = 100*Math.sin(alpha)
+        points.push(new THREE.Vector3(x, 1, z));
+         console.log(x, " ", z)
+    }
+    var geometry = new THREE.BufferGeometry().setFromPoints( points );
+    line = new THREE.Line( geometry, material );
+    scene.add(line);
 
 }
-
-// function createOrbitLines(){
-//     const material = new THREE.LineBasicMaterial({
-//         color:0xffffff,
-//         linewidth: 10
-//     });
-//     const points = [];
-//     for(let i = 0; i <= 3600; i++){
-//         points.push( new THREE.Vector3(i*Math.sin(360), -i*Math.cos(360),0));
-//         // console.log(i*Math.cos(360))
-//         // console.log(i*Math.sin(360))
-//     }
-//     const geometry = new THREE.BufferGeometry().setFromPoints( points );
-//     line = new THREE.Line( geometry, material );
-    
-
-// }
 
 
 
@@ -257,6 +264,7 @@ function addSpotlight(object, xpos, ypos, zpos) {
 }
 
 function addShapes() {
+
     scene.add(pluto);
     scene.add(triton);
     scene.add(neptune);
@@ -286,6 +294,7 @@ function addShapes() {
     scene.add(mercury);
     scene.add(sun)
     scene.add(skybox);
-    scene.add(line);
+
+
     scene.add(group);
 }
