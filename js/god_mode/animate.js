@@ -37,7 +37,6 @@ const d = 100;
 var alpha = 0;
 var dalpha = Math.PI/1000;
 
-
 function renderScene(){
     renderer.render(scene, camera);
     controls.update();
@@ -310,15 +309,15 @@ function followPlanet() {
     }
 } 
 
-function calculateCameraDistance(selectedobjname) {
+function calculateCameraDistance() {
     var name = selectedobjname.replace(' planet', '');
     var dist;
     switch(name) {
         case "Sun": return dist = 150; break;
         case "Mercury": return dist = 10; break;
         case "Venus": return dist = 20; break;
-        case "Moon": return dist = 5; break;
         case "Earth": return dist = 20; break;
+        case "Moon": return dist = 5; break;
         case "Mars": return dist = 15; break;
         case "Jupiter": return dist = 150; break;
         case "Saturn": return dist = 150; break;
@@ -337,26 +336,47 @@ function onDocumentKeyDown(event) {
     }
 }
 
-/*
-Current GUI Code:
-It doesn't work at the moment
-*/
-var testSpeed = 0;
+// Build the GUI
+var testSpeed = 1;
 function buildGui() {
     gui = new dat.GUI();
-    //var plan = gui.addFolder('Planets');
+    var solarsystemfolder = gui.addFolder('Solar System Controls');
+    var planetfolder = gui.addFolder('Planet Selection');
+    var selectedplanetfolder = gui.addFolder('Selected Planet');
     var params={
-        //time: speed,
         test: testSpeed,
-        select_planet: function() {/*add in code to select a planet*/},
-        select_planet2: function() {/*add in code to select a planet*/}
+        add: function() {},
+
+        //select planet functions
+        Sun: function() {/*followPlanet("Sun");*/},
+        Mercury: function() {/*followPlanet("Mercury");*/},
+        Venus: function() {},
+        Earth: function() {},
+        Moon: function() {},
+        Mars: function() {},
+        Jupiter: function() {},
+        Saturn: function() {},
+        Uranus: function() {},
+        Neptune: function() {},
+        Pluto: function() {}
     }
-        /*gui.add(params, 'speed', 0, 0.01).onChange(function(val){
-            speed = val;
-        }); */
         gui.add(params, 'test', 0, 100).onChange(function(val){
             testSpeed = val;
         });
-        gui.add(params, 'select_planet');
-        gui.add(params, 'select_planet2');
+        gui.add(params, 'add');
+
+        // planet selection folder
+        planetfolder.add(params, 'Sun');
+        planetfolder.add(params, 'Mercury');
+        planetfolder.add(params, 'Venus');
+        planetfolder.add(params, 'Earth');
+        planetfolder.add(params, 'Moon');
+        planetfolder.add(params, 'Mars');
+        planetfolder.add(params, 'Jupiter');
+        planetfolder.add(params, 'Saturn');
+        planetfolder.add(params, 'Uranus');
+        planetfolder.add(params, 'Neptune');
+        planetfolder.add(params, 'Pluto');
+
+        planetfolder.open();
     }
