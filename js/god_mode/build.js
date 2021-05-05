@@ -4,7 +4,7 @@
 var ambientlight;
 var cameralight;
 var sunlight;
-var line
+var orbits = new THREE.Group();
 
 //Create a cube using variable w, h, d
 function createCube(w, h, d, color) {
@@ -58,90 +58,91 @@ function createSkyBox(radius, hlines, vlines, textureName) {
     return sphere;
 }
 
-// function createOrbitLines(){
-//     var material = new THREE.LineBasicMaterial({
-//         color:0xffffff,
-//         linewidth: 10
-//     });
-//     var geo = new THREE.BufferGeometry();
-//     geo.vertices.push(0,0,0);
-//     geo.vertices.push(50,50,50);
 
 
-
-
-//     line = new THREE.Line( geo, material );
-    
-
-// }
-
-function createOrbitLines(){
+function createOrbitLines(orbitRadius){
     var material = new THREE.LineBasicMaterial({
-        color:0xffffff,
-        linewidth: 10
+        color:0x999999,
+        linewidth: 5
     });
+    var circumference = 12 * orbitRadius;
     var alpha = 0;
-    var dalpha =2 * Math.PI / 200;
-    var x;
-    var z;
+    var dalpha = 2 * Math.PI / circumference;
+    var xPos;
+    var zPos;
 
     var points = [];
-    for(let i = 0; i <= 360; i++){
+    for(let i = 0; i <= circumference; i++){
         alpha += dalpha;
-        x = -100*Math.cos(alpha);
-        z = 100*Math.sin(alpha)
-        points.push(new THREE.Vector3(x, 1, z));
-         console.log(x, " ", z)
+        xPos = -orbitRadius*Math.cos(alpha);
+        zPos = orbitRadius*Math.sin(alpha)
+        points.push(new THREE.Vector3(xPos, 1, zPos));
     }
     var geometry = new THREE.BufferGeometry().setFromPoints( points );
-    line = new THREE.Line( geometry, material );
-    scene.add(line);
+    var orbit = new THREE.Line( geometry, material );
+    orbits.add(orbit);
 
+    return orbit
 }
 
 
-
-// earth.rotation.y += speed;
-// earth.position.y = 1;
-// earth.position.x = -d*Math.cos(alpha);
-// earth.position.z = d*Math.sin(alpha);
-// requestAnimationFrame(animate_earth);
-
-//var cube = createCube(2, 2, 2, 0, 1, 0);
-//var sphere = createSphere(1, 20, 20, 1, 0, 1);
-
 var pluto = createTexturedSphere(0.465,8.184,8.184,"Pluto planet", 'images/textures/moontexture.jpg');
+var plutoOrbit = createOrbitLines(3948);
 var triton = createSphere(0.526,9.2,9.2,0x828f88);
+var tritonOrbit = createOrbitLines(15);
 var neptune = createTexturedSphere(9.7,170,170, "Neptune planet", 'images/textures/neptunetexture.jpg');
+var neptuneOrbit = createOrbitLines(3005);
 
 var ariel = createSphere(0.224,3.956,3.956,0x8e7c72);
+var arielOrbit = createOrbitLines(12);
 var umbriel = createSphere(0.227,3.99,3.99,0x7b7b7b);
+var umbrielOrbit = createOrbitLines(15);
 var oberon = createSphere(0.296,5.169,5.169,0xc0a99f);
+var oberonOrbit = createOrbitLines(25);
 var titania = createSphere(0.306,5.39,5.39,0xd2c6b9);
+var titaniaOrbit = createOrbitLines(20);
 var uranus = createTexturedSphere(10,176,176,"Uranus planet", 'images/textures/uranustexture.jpg');
+var uranusOrbit = createOrbitLines(1920);
 
 var dione = createSphere(0.216,3.8,3.5,0x7d7d7d);
+var dioneOrbit = createOrbitLines(30.4);
 var iapetus = createSphere(0.284,4.99,4.99,0x493729);
+var iapetusOrbit = createOrbitLines(145);
 var rhea = createSphere(0.297,5.227,5.227,0xb8b8b8);
+var rheaOrbit = createOrbitLines(41);
 var titan = createSphere(1.07,17.464,17.464,0xd7c461);
+var titanOrbit = createOrbitLines(50);
 var saturn = createTexturedSphere(22.74,400,400,"Saturn planet", 'images/textures/saturntexture.jpg');
+var saturnOrbit = createOrbitLines(950)
 
 var callisto = createSphere(0.945,16.6,16.6,0x7c6d60);
+var callistoOrbit = createOrbitLines(70);
 var ganymede = createSphere(1.03,18.16,18.16,0xb4b1b2);
+var ganymedeOrbit = createOrbitLines(50);
 var europa = createSphere(0.61,10.77,10.77,0xac966f);
+var europaOrbit = createOrbitLines(40);
 var io = createSphere(0.7,12.57,12.57,0xcabf55);
+var ioOrbit = createOrbitLines(30);
 var jupiter = createTexturedSphere(27.2,482,482,"Jupiter planet", 'images/textures/jupitertexture.jpg');
+var jupiterOrbit = createOrbitLines(520.3);
 
 var deimos = createSphere(0.002,0.035,0.035,0x2596be);
+var deimosOrbit = createOrbitLines(5);
 var phobos = createSphere(0.004,0.07,0.07,0x2596be);
+var phobosOrbit = createOrbitLines(3);
 var mars = createTexturedSphere(1.33,23.43,23.43,"Mars planet",'images/textures/marstexture.jpg');
+var marsOrbit = createOrbitLines(152.4);
 
 var earth = createTexturedSphere(2.5,44,44,"Earth planet",'images/textures/earthtexture.jpg');
+var earthOrbit = createOrbitLines(100);
 var moon = createTexturedSphere(0.675,11.88,11.88,"Moon planet",'images/textures/moontexture.jpg');
+var moonOrbit = createOrbitLines(5);
 
 var venus = createTexturedSphere(2.5,44,44,"Venus planet",'images/textures/venustexture.jpg');
+var venusOrbit = createOrbitLines(72);
 
 var mercury = createTexturedSphere(1,32,32,"Mercury planet",'images/textures/mercurytexture.jpg');
+var mercuryOrbit = createOrbitLines(38);
 
 var sun = createTexturedSphere(30,55,55,"Sun planet",'images/textures/suntexture.jpg');
 
@@ -294,7 +295,7 @@ function addShapes() {
     scene.add(mercury);
     scene.add(sun)
     scene.add(skybox);
-
+    scene.add (orbits);
 
     scene.add(group);
 }

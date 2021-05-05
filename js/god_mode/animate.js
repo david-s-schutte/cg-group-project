@@ -36,7 +36,7 @@ const speed = 0.005;
 
 const d = 100;
 var alpha = 0;
-var dalpha = Math.PI/1000;
+var dalpha = Math.PI/10000;
 
 
 function renderScene(){
@@ -86,6 +86,8 @@ function animate_moon(){
     moon.position.y = earth.position.y;
     moon.position.x = earth.position.x+5*Math.sin(alpha*20);
     moon.position.z = earth.position.z-5*Math.cos(alpha*20);
+    moonOrbit.position.x = earth.position.x;
+    moonOrbit.position.z = earth.position.z;
     requestAnimationFrame(animate_moon);
 }
 
@@ -105,6 +107,8 @@ function animate_phobos(){
     phobos.position.y = mars.position.y;
     phobos.position.x = mars.position.x+3*Math.sin(alpha*43.2);
     phobos.position.z = mars.position.z-3*Math.cos(alpha*43.2);
+    phobosOrbit.position.x = mars.position.x;
+    phobosOrbit.position.z = mars.position.z;
     requestAnimationFrame(animate_phobos);
 }
 
@@ -112,6 +116,8 @@ function animate_deimos(){
     deimos.position.y = mars.position.y;
     deimos.position.x = mars.position.x+5*Math.sin(alpha*3.68);
     deimos.position.z = mars.position.z-5*Math.cos(alpha*3.68);
+    deimosOrbit.position.x = mars.position.x;
+    deimosOrbit.position.z = mars.position.z;
     requestAnimationFrame(animate_deimos);
 }
 
@@ -129,6 +135,8 @@ function animate_io(){
     io.position.y = jupiter.position.y;
     io.position.x = jupiter.position.x+30*Math.sin(alpha*9.4);
     io.position.z = jupiter.position.z-30*Math.cos(alpha*9.4);
+    ioOrbit.position.x = jupiter.position.x;
+    ioOrbit.position.z = jupiter.position.z;
     requestAnimationFrame(animate_io);
 }
 
@@ -137,6 +145,8 @@ function animate_europa() {
     europa.position.y = jupiter.position.y;
     europa.position.x = jupiter.position.x+40*Math.sin(alpha*4);
     europa.position.z = jupiter.position.z-40*Math.cos(alpha*4);
+    europaOrbit.position.x = jupiter.position.x;
+    europaOrbit.position.z = jupiter.position.z;
     requestAnimationFrame(animate_europa);
 }
 
@@ -145,6 +155,8 @@ function animate_ganymede() {
     ganymede.position.y = jupiter.position.y;
     ganymede.position.x = jupiter.position.x+50*Math.sin(alpha*2);
     ganymede.position.z = jupiter.position.z-50*Math.cos(alpha*2);
+    ganymedeOrbit.position.x = jupiter.position.x;
+    ganymedeOrbit.position.z = jupiter.position.z;
     requestAnimationFrame(animate_ganymede);
 }
 
@@ -153,6 +165,8 @@ function animate_callisto() {
     callisto.position.y = jupiter.position.y;
     callisto.position.x = jupiter.position.x+70*Math.sin(alpha);
     callisto.position.z = jupiter.position.z-70*Math.cos(alpha);
+    callistoOrbit.position.x = jupiter.position.x;
+    callistoOrbit.position.z = jupiter.position.z;
     requestAnimationFrame(animate_callisto);
 }
 
@@ -195,27 +209,35 @@ function animate_titan() {
     titan.position.y = saturn.position.y;
     titan.position.x = saturn.position.x+50*Math.sin(alpha/0.6);
     titan.position.z = saturn.position.z-50*Math.cos(alpha/0.6);
+    titanOrbit.position.x = saturn.position.x;
+    titanOrbit.position.z = saturn.position.z;
     requestAnimationFrame(animate_titan);
 }
 
 function animate_rhea() {
     rhea.position.y = saturn.position.y;
     rhea.position.x = saturn.position.x+41*Math.sin(alpha/0.2);
-    rhea.position.z = saturn.position.z-41*Math.cos(alpha/0.2);
+    rhea.position.z = saturn.position.z-41*Math.cos(alpha/0.2);    
+    rheaOrbit.position.x = saturn.position.x;
+    rheaOrbit.position.z = saturn.position.z;
     requestAnimationFrame(animate_rhea);
 }
 
 function animate_iapetus() {
     iapetus.position.y = saturn.position.y;
     iapetus.position.x = saturn.position.x+145*Math.sin(alpha/2.9);
-    iapetus.position.z = saturn.position.z-145*Math.cos(alpha/2.9);
+    iapetus.position.z = saturn.position.z-145*Math.cos(alpha/2.9);    
+    iapetusOrbit.position.x = saturn.position.x;
+    iapetusOrbit.position.z = saturn.position.z;
     requestAnimationFrame(animate_iapetus);
 }
 
 function animate_dione() {
     dione.position.y = saturn.position.y;
     dione.position.x = saturn.position.x+30.4*Math.sin(alpha/0.1);
-    dione.position.z = saturn.position.z-30.4*Math.cos(alpha/0.1);
+    dione.position.z = saturn.position.z-30.4*Math.cos(alpha/0.1);    
+    dioneOrbit.position.x = saturn.position.x;
+    dioneOrbit.position.z = saturn.position.z;
     requestAnimationFrame(animate_dione);
 }
 
@@ -230,28 +252,36 @@ function animate_uranus() {
 function animate_titania() {
     titania.position.y = uranus.position.y;
     titania.position.x = uranus.position.x+20*Math.sin(alpha*2.5);
-    titania.position.z = uranus.position.z-20*Math.cos(alpha*2.5);
+    titania.position.z = uranus.position.z-20*Math.cos(alpha*2.5);    
+    titaniaOrbit.position.x = uranus.position.x;
+    titaniaOrbit.position.z = uranus.position.z;
     requestAnimationFrame(animate_titania);
 }
 
 function animate_oberon() {
     oberon.position.y = uranus.position.y;
     oberon.position.x = uranus.position.x+25*Math.sin(alpha*4.1);
-    oberon.position.z = uranus.position.z-25*Math.cos(alpha*4.1);
+    oberon.position.z = uranus.position.z-25*Math.cos(alpha*4.1);    
+    oberonOrbit.position.x = uranus.position.x;
+    oberonOrbit.position.z = uranus.position.z;
     requestAnimationFrame(animate_oberon);
 }
 
 function animate_umbriel() {
     umbriel.position.y = uranus.position.y;
     umbriel.position.x = uranus.position.x+15*Math.sin(alpha*13.4);
-    umbriel.position.z = uranus.position.z-15*Math.cos(alpha*13.4);
+    umbriel.position.z = uranus.position.z-15*Math.cos(alpha*13.4);    
+    umbrielOrbit.position.x = uranus.position.x;
+    umbrielOrbit.position.z = uranus.position.z;
     requestAnimationFrame(animate_umbriel);
 }
 
 function animate_ariel() {
     ariel.position.y = uranus.position.y;
     ariel.position.x = uranus.position.x+12*Math.sin(alpha*8.7);
-    ariel.position.z = uranus.position.z-12*Math.cos(alpha*8.7);
+    ariel.position.z = uranus.position.z-12*Math.cos(alpha*8.7);    
+    arielOrbit.position.x = uranus.position.x;
+    arielOrbit.position.z = uranus.position.z;
     requestAnimationFrame(animate_ariel);
 }
 
@@ -266,7 +296,9 @@ function animate_neptune() {
 function animate_triton() {
     triton.position.y = neptune.position.y;
     triton.position.x = neptune.position.x+15*Math.sin(alpha*-5.876);
-    triton.position.z = neptune.position.z-15*Math.cos(alpha*-5.876);
+    triton.position.z = neptune.position.z-15*Math.cos(alpha*-5.876);    
+    tritonOrbit.position.x = neptune.position.x;
+    tritonOrbit.position.z = neptune.position.z;
     requestAnimationFrame(animate_triton);
 }
 
@@ -277,6 +309,11 @@ function animate_pluto() {
     pluto.position.z = (d*39.48)*Math.cos(alpha/247.9);
     requestAnimationFrame(animate_pluto);
 }
+
+
+
+
+
 
 //reposition camera
 var raycaster = new THREE.Raycaster();

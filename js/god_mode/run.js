@@ -3,7 +3,6 @@ addShapes();
 createAsteroids();
 createsaturnring();
 renderScene();
-createOrbitLines()
 
 //animate_cube();
 //animate_sphere();
