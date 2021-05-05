@@ -29,7 +29,6 @@ function animate_sphere() {
 
 const speed = 0.005;
 
-
 // x = d*cos(angle)
 // z = d*sin(angle)
 
@@ -261,13 +260,15 @@ function animate_pluto() {
     requestAnimationFrame(animate_pluto);
 }
 
-//reposition camera
+//Reposition camera by clicking planets
 var raycaster = new THREE.Raycaster();
 
 //Define a selected object
 var planetselected = false;
 var selectedplanet;
 var selectedplanetname;
+var dist = calculateCameraDistance("Sun planet");
+var height;
 
 //add event listener
 function onDocumentMouseDown(event) {
@@ -286,41 +287,38 @@ function onDocumentMouseDown(event) {
             planetselected= true;
             selectedplanet = intersects[0].object;
             selectedplanetname = intersects[0].object.name;
-            var pos = selectedplanet.position;
-            dist = calculateCameraDistance(selectedplanetname);
-            camera.position.set(pos.x+dist, pos.y+(dist/10), pos.z);
-            controls.update();
             //window.open("https://en.wikipedia.org/wiki/Earth");
-            followPlanet();
-        } else {
-            //console.log("No object found");
+            selectPlanet();
         }
     }
 }
 
+var cameralock = true;
 function followPlanet() {
     if (planetselected) {
-        //dist = calculateCameraDistance(selectedplanetname);
         var pos = selectedplanet.position;
-        //camera.position.set(pos.x+dist, pos.y+(dist/10), pos.z);
+        if (cameralock) {
+            camera.position.set(pos.x+(dist*camdistance), pos.y+((dist/10)*camheight), pos.z);
+        }
         controls.target.set(pos.x, pos.y, pos.z);
         controls.update();
         requestAnimationFrame(followPlanet);
     }
 }
 
-var lockedplanet;
-function lockCameraToPlanet() {
-    if (planetselected) {
-     var lockedplanetdist = calculateCameraDistance(lockedplanet.name);
-     var lockedplanetpos = lockedplanet.position;
-     camera.position.set(lockedplanetpos.x+lockedplanetdist, lockedplanetpos.y+(lockedplanetdist/10), lockedplanetpos.z);
-     controls.target.set(lockedplanetpos.x, lockedplanetpos.y, lockedplanetpos.z);
-     controls.update();
-     requestAnimationFrame(lockCameraToPlanet);
-    }
+// lock the camera to a planet and select it
+function selectPlanet() {
+    planetselected = true; 
+    dist = calculateCameraDistance(selectedplanet.name);
+    var pos = selectedplanet.position;
+    camera.position.set(pos.x+dist, pos.y+(dist/10), pos.z);
+    controls.update();
+    camdistance = 1;
+    camheight = 1;
+    followPlanet();
 }
 
+// return the distance the camera should be from each planet
 function calculateCameraDistance(nam) {
     var name = nam.replace(' planet', '');
     var dist;
@@ -339,43 +337,83 @@ function calculateCameraDistance(nam) {
     }
 }
 
+// reset the camera if esc is pressed
 function onDocumentKeyDown(event) {
     var keyCode = event.which;
     if (keyCode == 27) {
-        controls.reset();
-        planetselected= false;
-        selectedplanetname = "";
+        resetCamera();
     }
 }
 
+function resetCamera() {
+    controls.reset();
+    planetselected= false;
+    selectedplanetname = "";
+    camheight = 1;
+    camdistance = 1;
+}
+
+function resizePlanet() {
+    if (planetselected) {
+        selectedplanet.scale.x = size;
+        selectedplanet.scale.y = size;
+        selectedplanet.scale.z = size;
+    }
+    if (selectedplanet.name.includes("Sun")) {
+        spotlightgroup.scale.x = size;
+        spotlightgroup.scale.y = size;
+        spotlightgroup.scale.z = size;
+        //add in code to increase spotlight distance
+        //for (var i = 0; i < spotlightgroup.size)
+    }
+    requestAnimationFrame(resizePlanet);
+}
+
 // Build the GUI
-var testSpeed = 1;
+var size = 1;
+var time = 1;
+var camdistance = 1;
+var camheight = 1;
+var orbit = 1;
+var planetrotation = 1;
 function buildGui() {
     gui = new dat.GUI();
     var solarsystemfolder = gui.addFolder('Solar System Controls');
     var planetfolder = gui.addFolder('Planet Selection');
     var selectedplanetfolder = gui.addFolder('Selected Planet');
+    var camerafolder = gui.addFolder('Camera Controls')
     var params={
-        test: testSpeed,
-        add: function() {},
+        //solar system functions
+        Time: time,
 
         //select planet functions
-        Sun: function() {planetselected= false; lockedplanet = sun; planetselected= true; lockCameraToPlanet();},
-        Mercury: function() {planetselected= false; lockedplanet = mercury; planetselected= true; lockCameraToPlanet();},
-        Venus: function() {planetselected= false; lockedplanet = venus; planetselected= true; lockCameraToPlanet();},
-        Earth: function() {planetselected= false; lockedplanet = earth; planetselected= true; lockCameraToPlanet();},
-        Moon: function() {planetselected= false; lockedplanet = moon; planetselected= true; lockCameraToPlanet();},
-        Mars: function() {planetselected= false; lockedplanet = mars; planetselected= true; lockCameraToPlanet();},
-        Jupiter: function() {planetselected= false; lockedplanet = jupiter; planetselected= true; lockCameraToPlanet();},
-        Saturn: function() {planetselected= false; lockedplanet = saturn; planetselected= true; lockCameraToPlanet();},
-        Uranus: function() {planetselected= false; lockedplanet = uranus; planetselected= true; lockCameraToPlanet();},
-        Neptune: function() {planetselected= false; lockedplanet = neptune; planetselected= true; lockCameraToPlanet();},
-        Pluto: function() {planetselected= false; lockedplanet = pluto; planetselected= true; lockCameraToPlanet();}
+        Sun: function() {selectedplanet = sun; selectPlanet(); selectedplanetfolder.open();},
+        Mercury: function() {selectedplanet = mercury; selectPlanet(); selectedplanetfolder.open();},
+        Venus: function() {selectedplanet = venus; selectPlanet(); selectedplanetfolder.open();},
+        Earth: function() {selectedplanet = earth; selectPlanet(); selectedplanetfolder.open();},
+        Moon: function() {selectedplanet = moon; selectPlanet(); selectedplanetfolder.open();},
+        Mars: function() {selectedplanet = mars; selectPlanet(); selectedplanetfolder.open();},
+        Jupiter: function() {selectedplanet = jupiter; selectPlanet(); selectedplanetfolder.open();},
+        Saturn: function() {selectedplanet = saturn; selectPlanet(); selectedplanetfolder.open();},
+        Uranus: function() {selectedplanet = uranus; selectPlanet(); selectedplanetfolder.open();},
+        Neptune: function() {selectedplanet = neptune; selectPlanet(); selectedplanetfolder.open();},
+        Pluto: function() {selectedplanet = pluto; selectPlanet(); selectedplanetfolder.open();},
+
+        //Selected planet functions
+        Planet_Size: size,
+        Planet_Orbit: orbit,
+        Planet_Rotation: planetrotation,
+
+        //Camera Functions
+        Lock_Camera: cameralock,
+        Distance: camdistance,
+        Height: camheight,
+        Reset_Camera: function() {resetCamera();}
     }
-        gui.add(params, 'test', 0, 100).onChange(function(val){
-            testSpeed = val;
+        // Solar system folder
+        solarsystemfolder.add(params, 'Time', 0, 2).onChange(function(val){
+            time = val;
         });
-        gui.add(params, 'add');
 
         // planet selection folder
         planetfolder.add(params, 'Sun');
@@ -390,5 +428,31 @@ function buildGui() {
         planetfolder.add(params, 'Neptune');
         planetfolder.add(params, 'Pluto');
 
+        // Camera Controls Folder
+        camerafolder.add(params, 'Height',-50, 50).onChange(function(val){
+            camheight = val;
+        });
+        camerafolder.add(params, 'Distance', 1, 6).onChange(function(val){
+            camdistance = val;
+        });
+        camerafolder.add(params, 'Lock_Camera').onChange(function(val){
+            cameralock = val;
+        });
+        camerafolder.add(params, 'Reset_Camera');
+
         planetfolder.open();
+        camerafolder.open();
+        solarsystemfolder.open();
+
+        // Selected Planet folder
+        selectedplanetfolder.add(params, 'Planet_Size', 0.1, 50).onChange(function(val){
+            size = val;
+            resizePlanet();
+        });
+        selectedplanetfolder.add(params, 'Planet_Orbit', 1, 100).onChange(function(val){
+            orbit = val;
+        });
+        selectedplanetfolder.add(params, 'Planet_Rotation', -4, 4).onChange(function(val){
+            planetspeed = val;
+        });
     }
