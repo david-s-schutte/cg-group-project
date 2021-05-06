@@ -291,7 +291,7 @@ function animate_shuttle(){
     requestAnimationFrame(animate_shuttle);
 }
 
-function onDocumentKeyDown(event) {
+function onDocumentKey(event) {
     var keyCode = event.which;
     
     //Movement

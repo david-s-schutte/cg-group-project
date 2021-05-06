@@ -40,6 +40,6 @@ createLight();
 buildGui();
 
 // Recenter camera
-document.addEventListener('keydown', onDocumentKeyDown, false);
+document.addEventListener('keydown', onDocumentKey, false);
 
 window.addEventListener('resize', resizeScene);

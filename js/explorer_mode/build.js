@@ -17,13 +17,28 @@ function createCube(w, h, d, color) {
 }
 
 function createShuttle(){
-    var material = new THREE.MeshPhongMaterial();
-    material.color = new THREE.Color(1, 1, 1);
-    var geometry_cube = new THREE.BoxGeometry(5, 5, 10);
-    var cube = new THREE.Mesh(geometry_cube, material);
-    cube.material.side = THREE.DoubleSide;
-    cube.position.z = -100;
-    return cube;
+    
+    // var mtlLoader = new THREE.MTLLoader();
+
+    // mtlLoader.load("Astronaut/Z2.mtl", function (materials) {
+    //     materials.preload();
+    //     var objLoader = new THREE.OBJLoader();
+    //     objLoader.setMaterials(materials);
+
+    //     objLoader.load("Astronaut", function (mesh) {
+    //         var CenterBB;
+    //         var SizeBB;
+    //         mesh.traverse(function (child) {
+    //             if (child instanceof THREE.Mesh) {
+    //                 var mygeometry = new THREE.Geometry().fromBufferGeometry(child.geometry);
+    //                 mygeometry.computeBoundingBox();
+    //                 child.material.color = new THREE.Color(1, 1, 1);
+    //                 CenterBB = mygeometry.boundingBox.getCenter();
+    //                 SizeBB = mygeometry.boundingBox.getSize();
+    //             }
+    //         });
+    //     }
+    // }
 }
 
 //Create a cube using variable w, h, d
