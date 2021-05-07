@@ -264,11 +264,13 @@ function animate_pluto() {
 // Build the GUI
 var spd = 0.01
 var time = 1;
+var lookspeed = 0.01;
 
 function buildGui() {
     gui = new dat.GUI();
     var params = {
         shuttle_speed: spd,
+        look_speed: lookspeed,
         Time: time
     };
 
@@ -276,62 +278,25 @@ function buildGui() {
         spd = val;
     });
 
+    gui.add(params, 'look_speed', 0.01, 0.5).onChange(function(val){
+        lookspeed = val;
+    });
+
     gui.add(params, 'Time', 1, 50).onChange(function(val){
         time = val;
     });
 }
 
+var clock = new THREE.Clock();
+
 //Code to animate shuttle and take user input for shuttle
 function animate_shuttle(){
     //Force camera to follow the shuttle
-
-    //Get player input
     
-    //Render the shuttle
+    //Render the camera
+    var delta = clock.getDelta();
+    controls.update(delta);
+    controls.lookSpeed = lookspeed;
+    controls.movementSpeed = spd;
     requestAnimationFrame(animate_shuttle);
-}
-
-function onDocumentKey(event) {
-    var keyCode = event.which;
-    
-    //Movement
-    //User presses W
-    if (keyCode == 87) {
-        camera.position.x -= Math.sin(camera.rotation.y) * spd;
-        camera.position.z -= Math.cos(camera.rotation.y) * spd;
-    }
-    //User presses S
-    else if (keyCode == 83) {
-        camera.position.x += Math.sin(camera.rotation.y) * spd;
-        camera.position.z += Math.cos(camera.rotation.y) * spd;
-    }
-    //User presses A
-    if (keyCode == 65) {
-        camera.position.x += Math.sin(camera.rotation.y - Math.PI/2) * spd;
-        camera.position.z += Math.cos(camera.rotation.y - Math.PI/2) * spd;
-    }
-    //User presses D
-    else if (keyCode == 68) {
-        camera.position.x -= Math.sin(camera.rotation.y - Math.PI/2) * spd;
-        camera.position.z -= Math.cos(camera.rotation.y - Math.PI/2) * spd;
-    }
-    
-    //Camera Controls
-    //User presses Left Arrow
-    if (keyCode == 37) {
-        camera.rotation.y += Math.PI *0.01;
-    }
-    //User presses Right Arrow
-    else if (keyCode == 39) {
-        camera.rotation.y -= Math.PI *0.01;
-    }
-    //User presses Up Arrow
-    else if (keyCode == 38) {
-        camera.rotation.x += Math.PI *0.01;
-    }
-    //User presses Down Arrow
-    else if (keyCode == 40) {
-        camera.rotation.x -= Math.PI *0.01;
-    }
-
 }

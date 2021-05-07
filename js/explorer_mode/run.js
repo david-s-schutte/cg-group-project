@@ -2,9 +2,6 @@ setScene();
 addShapes();
 createAsteroids();
 createsaturnring();
-
-//animate_cube();
-//animate_sphere();
 animate_earth();
 animate_moon();
 animate_sun();
@@ -38,8 +35,5 @@ renderScene();
 
 createLight();
 buildGui();
-
-// Recenter camera
-document.addEventListener('keydown', onDocumentKey, false);
 
 window.addEventListener('resize', resizeScene);
