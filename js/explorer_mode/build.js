@@ -39,6 +39,13 @@ function createShuttle(){
     //         });
     //     }
     // }
+
+    var material = new THREE.MeshPhongMaterial();
+    material.color = new THREE.Color(1, 1, 1);
+    //material.wireframe = true;
+    var geometry_cube = new THREE.BoxGeometry(10, 10, 20);
+    var cube = new THREE.Mesh(geometry_cube, material);
+    return cube;
 }
 
 //Create a cube using variable w, h, d
@@ -327,5 +334,6 @@ function addShapes() {
     scene.add(skybox);
     scene.add(spotlightgroup);
     scene.add (orbits);
-    //scene.add(shuttle);
+    scene.add(camera);
+    scene.add(shuttle);
 }

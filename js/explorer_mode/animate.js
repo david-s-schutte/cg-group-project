@@ -288,9 +288,31 @@ function buildGui() {
 }
 
 var clock = new THREE.Clock();
+var started = false;
+
+function updatePositionForCamera(camera) {
+    // fixed distance from camera to the object
+    var dist = -10;
+    var cwd = new THREE.Vector3();
+    
+    camera.getWorldDirection(cwd);
+    
+    cwd.multiplyScalar(dist);
+    cwd.add(camera.position);
+    
+    shuttle.position.set(cwd.x, cwd.y, cwd.z);
+    shuttle.setRotationFromQuaternion(camera.quaternion);
+}
 
 //Code to animate shuttle and take user input for shuttle
 function animate_shuttle(){
+    //Start the camera at earth's position
+    if(!started){
+        camera.position.x = earth.position.x;
+        camera.position.y = earth.position.y;
+        camera.position.z = earth.position.z;
+        started = true;
+    }
     //Force camera to follow the shuttle
     
     //Render the camera
