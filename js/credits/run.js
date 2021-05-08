@@ -1,4 +1,6 @@
 setScene();
-addShapes();
 createLight();
+
+addShapes();
+
 window.addEventListener('resize', resizeScene);
