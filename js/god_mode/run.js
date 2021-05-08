@@ -35,4 +35,11 @@ animate_triton();
 animate_pluto();
 renderScene();
 
+createLight();
+buildGui();
+
+// Recenter camera
+document.addEventListener('mousedown', onDocumentMouseDown, false);
+document.addEventListener('keydown', onDocumentKeyDown, false);
+
 window.addEventListener('resize', resizeScene);
